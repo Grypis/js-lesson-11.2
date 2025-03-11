@@ -7,11 +7,7 @@ export function getAllBooks() {
   const params = {};
   const headers = {};
 
-  return fetch(url, { params, headers })
-    .then(res => res.json())
-    .catch(err => {
-      console.log(err);
-    });
+  return fetch(url).then(res => res.json());
 }
 
 export function createBook(book) {
@@ -23,6 +19,7 @@ export function createBook(book) {
     headers: {
       'Content-Type': 'application/json',
     },
+
     body: JSON.stringify(book),
   };
 
@@ -33,8 +30,54 @@ export function createBook(book) {
     });
 }
 
-function updateBook() {}
+export function updateBook({ id, ...book }) {
+  console.log(book);
+  const END_POINT = '/books';
+  const url = `${BASE_URL}${END_POINT}/${id}`;
 
-function resetBook() {}
+  const options = {
+    method: 'PATCH',
+    headers: {
+      'Content-Type': 'application/json',
+    },
 
-function deleteBook() {}
+    body: JSON.stringify(book),
+  };
+
+  return fetch(url, options)
+    .then(res => res.json())
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+export function resetBook(id, book) {
+  const END_POINT = '/books';
+  const url = `${BASE_URL}${END_POINT}/${id}`;
+
+  const options = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+
+    body: JSON.stringify(book),
+  };
+
+  return fetch(url, options)
+    .then(res => res.json())
+    .catch(err => {
+      console.log(err);
+    });
+}
+
+export function deleteBook(id) {
+  const END_POINT = '/books';
+  const url = `${BASE_URL}${END_POINT}/${id}`;
+
+  const options = {
+    method: 'DELETE',
+  };
+
+  return fetch(url, options);
+}
